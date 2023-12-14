@@ -1,0 +1,42 @@
+package rimgosu.cbthub.domain.round;
+
+import lombok.*;
+import rimgosu.cbthub.domain.category.Category;
+import rimgosu.cbthub.domain.logs.RoundLog;
+import rimgosu.cbthub.domain.question.Question;
+
+import javax.persistence.*;
+
+import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Round {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "round_id")
+    private Long id;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    private String roundName;
+
+    @Embedded
+    private RoundInfo roundInfo;
+
+    @OneToOne(mappedBy = "round", fetch = LAZY)
+    private RoundLog roundLog;
+
+    @OneToMany(mappedBy = "round", fetch = LAZY)
+    private List<Question> questions;
+
+}
