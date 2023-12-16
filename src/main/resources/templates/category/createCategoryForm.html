@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <p>카테고리 등록 페이지</p>
+    <form id="categoryForm" role="form" action="/category/new" th:object="${categoryForm}"
+          method="post">
+        <div class="form-group">
+            <label th:for="name">이름</label>
+            <input required type="text" th:field="*{categoryName}" class="form-control"
+                   placeholder="이름을 입력하세요"
+                   th:class="${#fields.hasErrors('categoryName')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('categoryName')}"
+               th:errors="*{categoryName}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="categoryType">타입</label>
+            <select th:field="*{categoryType}">
+                <option th:each="typeOpt : ${T(rimgosu.cbthub.domain.category.CategoryType).values()}"
+                        th:value="${typeOpt}" th:text="${typeOpt}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label th:for="testDescription">설명</label>
+            <input required type="text" id="testDescription" th:field="*{categoryInfo.testDescription}" class="form-control"
+                   placeholder="카테고리 설명을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="testingOrganization">주최기관</label>
+            <input required type="text" id="testingOrganization" th:field="*{categoryInfo.testingOrganization}" class="form-control"
+                   placeholder="카테고리 주최 기관을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="testOrgUrl">기관 url</label>
+            <input required type="text" id="testOrgUrl" th:field="*{categoryInfo.testOrgUrl}" class="form-control"
+                   placeholder="기관 홈페이지를 입력하세요">
+        </div>
+
+        <p id="passwordMatchMessage"></p>
+        <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+</body>
+</html>

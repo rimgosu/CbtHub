@@ -42,4 +42,12 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Round> rounds;
 
+    //== 카테고리 등록 ==//
+    public Category(String categoryName, CategoryType categoryType, CategoryInfo categoryInfo) {
+        this.categoryName = categoryName;
+        this.categoryType = categoryType;
+        this.categoryInfo = categoryInfo;
+    }
+
+
 }

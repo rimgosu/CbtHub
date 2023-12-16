@@ -55,7 +55,7 @@ public class Member {
         this.username = username;
         this.grade = MemberGrade.NORMAL; // 기본값 설정
         this.point = 0; // 기본값 설정
-        this.role = Role.MEMBER; // 기본값 설정
+        this.role = Role.USER; // 기본값 설정
         this.isActivate = true; // 기본값 설정
         this.registerDate = new Date(); // 현재 시간으로 설정
     }
