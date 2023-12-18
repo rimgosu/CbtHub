@@ -2,6 +2,7 @@ package rimgosu.cbthub.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import rimgosu.cbthub.controller.forms.RoundForm;
 import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.domain.round.Round;
 import rimgosu.cbthub.service.CategoryService;
@@ -26,10 +28,13 @@ public class RoundController {
     private final RoundService roundService;
     private final CategoryService categoryService;
 
-    @GetMapping("/list")
-    public String list(Model model) {
-        List<Round> rounds = roundService.findMembers();
+    @GetMapping("{categoryId}/list")
+    public String list(@PathVariable Long categoryId, Model model) {
+        log.info("GetMapping {categoryId}/list");
+        List<Round> rounds = roundService.findByCategoryId(categoryId);
+        Category category = categoryService.findOne(categoryId);
         model.addAttribute("rounds", rounds);
+        model.addAttribute("category", category);
         return "round/roundList";
 
     }
@@ -44,8 +49,8 @@ public class RoundController {
         return "round/createRoundForm";
     }
 
-    @PostMapping("/new")
-    public String create(@Valid RoundForm form, BindingResult result) {
+    @PostMapping("{categoryId}/new")
+    public String create(@PathVariable Long categoryId ,@Valid RoundForm form, BindingResult result) {
         log.info("PostMapping /new");
 
         if (result.hasErrors()) {
@@ -55,10 +60,12 @@ public class RoundController {
             return "round/createroundForm";
         }
 
-        Round round = new Round(form.getRoundName(), form.getRoundInfo(), form.getCategory());
+        Category category = categoryService.findOne(categoryId);
+
+        Round round = new Round(form.getRoundName(), form.getRoundInfo(), category);
         roundService.register(round);
 
-        return "redirect:/";
+        return "redirect:/round/"+categoryId+"/list";
     }
 
 

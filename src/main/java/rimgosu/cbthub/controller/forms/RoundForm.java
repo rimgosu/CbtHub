@@ -1,4 +1,4 @@
-package rimgosu.cbthub.controller;
+package rimgosu.cbthub.controller.forms;
 
 import lombok.*;
 import rimgosu.cbthub.domain.category.Category;
@@ -16,6 +16,6 @@ public class RoundForm {
     @NotEmpty(message = "라운드 이름은 필수입니다.")
     private String roundName;
     private RoundInfo roundInfo;
-    private Category category;
+    private Long categoryId;
 
 }

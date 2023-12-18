@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>자격증명</th>
+                <th>회차</th>
+                <th>접수</th>
+                <th>응시</th>
+                <th>합격</th>
+                <th>시행일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="round : ${rounds}">
+                <td th:text="${round.id}"></td>
+                <td th:text="${category.categoryName}"></td>
+                <td th:text="${round.roundName}"></td>
+                <td th:text="${round.roundInfo.applicantsNumber}"></td>
+                <td th:text="${round.roundInfo.testTakersNumber}"></td>
+                <td th:text="${round.roundInfo.passersNumber}"></td>
+                <td th:text="${round.roundInfo.testDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    회차 추가하기
+    <a th:href="@{/round/{id}/new(id=${category.id})}" th:text="${category.categoryName}"></a>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+
+
+</body>
+</html>

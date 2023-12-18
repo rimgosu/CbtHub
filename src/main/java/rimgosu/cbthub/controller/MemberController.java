@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import rimgosu.cbthub.controller.forms.LoginForm;
+import rimgosu.cbthub.controller.forms.MemberForm;
 import rimgosu.cbthub.domain.Member.Member;
 import rimgosu.cbthub.service.MemberService;
 

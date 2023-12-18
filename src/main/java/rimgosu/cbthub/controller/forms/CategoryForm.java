@@ -1,4 +1,4 @@
-package rimgosu.cbthub.controller;
+package rimgosu.cbthub.controller.forms;
 
 import lombok.*;
 import rimgosu.cbthub.domain.category.CategoryInfo;

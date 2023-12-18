@@ -29,7 +29,7 @@ public class RoundService {
         // EXCEPTION
         List<Round> findMembers = roundRepository.findByName(round.getRoundName());
         if (!findMembers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 카테고리입니다.");
+            throw new IllegalStateException("이미 존재하는 회차입니다.");
         }
     }
 
@@ -45,4 +45,7 @@ public class RoundService {
         return roundRepository.findByName(RoundName);
     }
 
+    public List<Round> findByCategoryId(Long categoryId) {
+        return roundRepository.findByCategoryId(categoryId);
+    }
 }

@@ -32,4 +32,10 @@ public class RoundRepository {
                 .getResultList();
     }
 
+    public List<Round> findByCategoryId(Long categoryId) {
+        return em.createQuery("select r from Round r join r.category c where c.id = :categoryId", Round.class)
+                .setParameter("categoryId", categoryId)
+                .getResultList();
+    }
+
 }
