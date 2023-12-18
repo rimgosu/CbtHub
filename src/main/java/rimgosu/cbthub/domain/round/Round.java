@@ -39,4 +39,11 @@ public class Round {
     @OneToMany(mappedBy = "round", fetch = LAZY)
     private List<Question> questions;
 
+    //==회차 등록==//
+    public Round(String roundName, RoundInfo roundInfo, Category category) {
+        this.roundName = roundName;
+        this.roundInfo = roundInfo;
+        this.category = category;
+    }
+
 }

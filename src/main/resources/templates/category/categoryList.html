@@ -11,24 +11,24 @@
                 <th>#</th>
                 <th>자격증명</th>
                 <th>필기/실기</th>
-                <th>설명</th>
-                <th>기관</th>
-                <th>url</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="category : ${categories}">
                 <td th:text="${category.id}"></td>
-                <td th:text="${category.categoryName}"></td>
+                <td class="clickable" th:text="${category.categoryName}" th:onclick="redirectToNewRound(${category.id})"></td>
                 <td th:text="${category.categoryType}"></td>
-                <td th:text="${category.categoryInfo?.testDescription}"></td>
-                <td th:text="${category.categoryInfo?.testingOrganization}"></td>
-                <td th:text="${category.categoryInfo?.testOrgUrl}"></td>
             </tr>
             </tbody>
         </table>
     </div>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
+
+<script>
+    function redirectToNewRound(categoryId) {
+        window.location.href = '/round/' + categoryId + '/new';
+    }
+</script>
 </body>
 </html>
