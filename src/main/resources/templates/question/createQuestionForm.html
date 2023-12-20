@@ -10,7 +10,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
     <p>회차 등록 페이지</p>
-    <form id="roundForm" role="form" th:action="@{/{id}/round/new(id=${category.id})}" th:object="${roundForm}"
+    <form id="questionForm" role="form" th:action="@{/{id}/question/new(id=${category.id})}" th:object="${questionForm}"
           method="post">
 
         <div class="form-group">
@@ -22,34 +22,34 @@
 
         <div class="form-group">
             <label th:for="name">이름</label>
-            <input required type="text" th:field="*{roundName}" class="form-control"
+            <input required type="text" th:field="*{questionName}" class="form-control"
                    placeholder="이름을 입력하세요"
-                   th:class="${#fields.hasErrors('roundName')}? 'form-control fieldError' : 'form-control'">
-            <p th:if="${#fields.hasErrors('roundName')}"
-               th:errors="*{roundName}">Incorrect date</p>
+                   th:class="${#fields.hasErrors('questionName')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('questionName')}"
+               th:errors="*{questionName}">Incorrect date</p>
         </div>
 
         <div class="form-group">
             <label th:for="applicantsNumber">접수자수</label>
-            <input required type="text" id="applicantsNumber" th:field="*{roundInfo.applicantsNumber}" class="form-control"
+            <input required type="text" id="applicantsNumber" th:field="*{questionInfo.applicantsNumber}" class="form-control"
                    placeholder="접수자수를 입력하세요">
         </div>
 
         <div class="form-group">
             <label th:for="testTakersNumber">응시자수</label>
-            <input required type="text" id="testTakersNumber" th:field="*{roundInfo.testTakersNumber}" class="form-control"
+            <input required type="text" id="testTakersNumber" th:field="*{questionInfo.testTakersNumber}" class="form-control"
                    placeholder="응시자수를 입력하세요">
         </div>
 
         <div class="form-group">
             <label th:for="passersNumber">합격자수</label>
-            <input required type="text" id="passersNumber" th:field="*{roundInfo.passersNumber}" class="form-control"
+            <input required type="text" id="passersNumber" th:field="*{questionInfo.passersNumber}" class="form-control"
                    placeholder="합격자수를 입력하세요">
         </div>
 
         <div class="form-group">
             <label th:for="testDate">응시일자</label>
-            <input required type="date" id="testDate" th:field="*{roundInfo.testDate}" class="form-control"
+            <input required type="date" id="testDate" th:field="*{questionInfo.testDate}" class="form-control"
                    placeholder="응시일자를 입력하세요">
         </div>
 

@@ -60,7 +60,7 @@ public class MemberController {
 
         List<Member> byUsernamePassword = memberService.findByUsernamePassword(form.getUsername(), passwordEncoder.encode(form.getPassword()));
 
-        if (byUsernamePassword.size() == 0) {
+        if (byUsernamePassword.isEmpty()) {
             return "redirect:/login";
         } else {
             return "redirect:/";

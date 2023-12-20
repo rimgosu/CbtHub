@@ -17,13 +17,12 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/category/*")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/list")
+    @GetMapping("/category")
     public String list(Model model) {
         List<Category> categories = categoryService.findMembers();
         model.addAttribute("categories", categories);
@@ -31,14 +30,14 @@ public class CategoryController {
 
     }
 
-    @GetMapping("/new")
+    @GetMapping("/category/new")
     public String createForm(Model model) {
         log.info("GetMapping /new");
         model.addAttribute("categoryForm", new CategoryForm());
         return "category/createCategoryForm";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/category/new")
     public String create(@Valid CategoryForm form, BindingResult result) {
         log.info("PostMapping /new");
 

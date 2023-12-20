@@ -37,8 +37,8 @@ public class RoundService {
         return roundRepository.findAll();
     }
 
-    public Round findOne(Long memberId) {
-        return roundRepository.findOne(memberId);
+    public Round findOne(Long id) {
+        return roundRepository.findOne(id);
     }
 
     public List<Round> findByName(String RoundName) {

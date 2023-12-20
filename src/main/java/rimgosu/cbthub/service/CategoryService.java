@@ -37,8 +37,8 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public Category findOne(Long memberId) {
-        return categoryRepository.findOne(memberId);
+    public Category findOne(Long categoryId) {
+        return categoryRepository.findOne(categoryId);
     }
 
     public List<Category> findByName(String categoryName) {

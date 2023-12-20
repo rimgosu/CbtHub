@@ -16,7 +16,7 @@
             <tbody>
             <tr th:each="category : ${categories}">
                 <td th:text="${category.id}"></td>
-                <td><a th:href="@{/round/{id}/list(id=${category.id})}" th:text="${category.categoryName}"></a></td>
+                <td><a th:href="@{/{id}/round/(id=${category.id})}" th:text="${category.categoryName}"></a></td>
                 <td th:text="${category.categoryType}"></td>
             </tr>
             </tbody>

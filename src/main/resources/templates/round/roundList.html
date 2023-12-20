@@ -19,7 +19,7 @@
             <tbody>
             <tr th:each="round : ${rounds}">
                 <td th:text="${round.id}"></td>
-                <td><a th:href="@{/question/{id}/list(id=${round.id})}" th:text="${category.categoryName + ' ' + round.roundName}"></a></td>
+                <td><a th:href="@{/{id}/question/(id=${round.id})}" th:text="${category.categoryName + ' ' + round.roundName}"></a></td>
                 <td th:text="${round.roundInfo.applicantsNumber}"></td>
                 <td th:text="${round.roundInfo.testTakersNumber}"></td>
                 <td th:text="${round.roundInfo.passersNumber}"></td>
@@ -30,7 +30,7 @@
     </div>
 
     회차 추가하기
-    <a th:href="@{/round/{id}/new(id=${category.id})}" th:text="${category.categoryName}"></a>
+    <a th:href="@{/{id}/round/new(id=${category.id})}" th:text="${category.categoryName}"></a>
 
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->

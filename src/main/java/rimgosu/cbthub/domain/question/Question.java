@@ -2,8 +2,10 @@ package rimgosu.cbthub.domain.question;
 
 import lombok.*;
 import rimgosu.cbthub.domain.board.QuestionComment;
+import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.round.Round;
+import rimgosu.cbthub.domain.round.RoundInfo;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,13 +43,13 @@ public class Question {
     @ElementCollection
     private List<String> choices;
 
-    Boolean isO;
-    int multipleChoiceAnswer;
-    String subjectiveAnswer;
-    String commentary;
-    String gptCommentary;
+    private Boolean isO;
+    private int multipleChoiceAnswer;
+    private String subjectiveAnswer;
+    private String commentary;
+    private String gptCommentary;
 
-    Date registerDate;
+    private Date registerDate;
 
     @OneToMany(mappedBy = "member")
     private List<QuestionComment> questionComments;
@@ -55,5 +57,31 @@ public class Question {
     @OneToOne(mappedBy = "question", fetch = LAZY)
     private QuestionLog questionLog;
 
+    //==문제 등록==//
+    public Question(int number,
+            QuestionType type,
+            String whatQuestion,
+            String photo,
+            List<String> options,
+            List<String> choices,
+            Boolean isO,
+            int multipleChoiceAnswer,
+            String subjectiveAnswer,
+            String commentary,
+            String gptCommentary,
+            Round round) {
+        this.number = number;
+        this.type = type;
+        this.whatQuestion = whatQuestion;
+        this.photo = photo;
+        this.options = options;
+        this.choices = choices;
+        this.isO = isO;
+        this.multipleChoiceAnswer = multipleChoiceAnswer;
+        this.subjectiveAnswer = subjectiveAnswer;
+        this.commentary = commentary;
+        this.gptCommentary = gptCommentary;
+        this.round = round;
+    }
 
 }

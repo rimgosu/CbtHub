@@ -21,14 +21,13 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/round/*")
 @RequiredArgsConstructor
 public class RoundController {
 
     private final RoundService roundService;
     private final CategoryService categoryService;
 
-    @GetMapping("{categoryId}/list")
+    @GetMapping("{categoryId}/round/")
     public String list(@PathVariable Long categoryId, Model model) {
         log.info("GetMapping {categoryId}/list");
         List<Round> rounds = roundService.findByCategoryId(categoryId);
@@ -39,7 +38,7 @@ public class RoundController {
 
     }
 
-    @GetMapping("{categoryId}/new")
+    @GetMapping("{categoryId}/round/new")
     public String createForm(@PathVariable Long categoryId, Model model) {
         log.info("GetMapping {categoryId}/new");
         Category category = categoryService.findOne(categoryId);
@@ -49,7 +48,7 @@ public class RoundController {
         return "round/createRoundForm";
     }
 
-    @PostMapping("{categoryId}/new")
+    @PostMapping("{categoryId}/round/new")
     public String create(@PathVariable Long categoryId ,@Valid RoundForm form, BindingResult result) {
         log.info("PostMapping /new");
 
@@ -65,7 +64,7 @@ public class RoundController {
         Round round = new Round(form.getRoundName(), form.getRoundInfo(), category);
         roundService.register(round);
 
-        return "redirect:/round/"+categoryId+"/list";
+        return "redirect:/"+categoryId+"/round/";
     }
 
 
