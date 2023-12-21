@@ -17,20 +17,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="round : ${rounds}">
-                <td th:text="${round.id}"></td>
-                <td><a th:href="@{/{id}/question/(id=${round.id})}" th:text="${category.categoryName + ' ' + round.roundName}"></a></td>
-                <td th:text="${round.roundInfo.applicantsNumber}"></td>
-                <td th:text="${round.roundInfo.testTakersNumber}"></td>
-                <td th:text="${round.roundInfo.passersNumber}"></td>
-                <td th:text="${round.roundInfo.testDate}"></td>
+            <tr th:each="question : ${questions}">
+                <td th:text="${question.number}"></td>
             </tr>
             </tbody>
         </table>
     </div>
 
     회차 추가하기
-    <a th:href="@{/{id}/round/new(id=${category.id})}" th:text="${category.categoryName}"></a>
+    <a th:href="@{/{id}/question/new(id=${round.id})}" th:text="${round.roundName}"></a>
 
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
