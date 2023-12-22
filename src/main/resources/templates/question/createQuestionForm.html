@@ -49,11 +49,30 @@
                    placeholder="사진 입력">
         </div>
 
-        <div class="form-group">
-            <label th:for="testDate">응시일자</label>
-            <input required type="date" id="testDate" th:field="*{questionInfo.testDate}" class="form-control"
-                   placeholder="응시일자를 입력하세요">
+        <label th:for="options">옵션</label>
+        <div class="form-group" th:each="option, iterStat : *{options}">
+            <input required class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
         </div>
+        <label th:for="choices">선택지</label>
+        <div class="form-group" th:each="choice, iterStat : *{choices}">
+            <input required class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
+        </div>
+
+        <!-- ox 퀴즈 정답 -->
+        <div class="form-group">
+            <label th:for="isO">ox퀴즈정답</label>
+            <select th:field="*{isO}">
+                <option value="true" th:text="'O'">O</option>
+                <option value="false" th:text="'X'">X</option>
+            </select>
+        </div>
+        
+        <!-- 객관식 정답 -->
+
+
+
+
+
 
         <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
     </form>

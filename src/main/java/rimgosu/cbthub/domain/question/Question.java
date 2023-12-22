@@ -57,6 +57,8 @@ public class Question {
     @OneToOne(mappedBy = "question", fetch = LAZY)
     private QuestionLog questionLog;
 
+
+
     //==문제 등록==//
     public Question(int number,
             QuestionType type,

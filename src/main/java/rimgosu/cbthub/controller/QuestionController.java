@@ -15,6 +15,8 @@ import rimgosu.cbthub.service.QuestionService;
 import rimgosu.cbthub.service.RoundService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -40,8 +42,20 @@ public class QuestionController {
     public String createForm(@PathVariable Long roundId, Model model) {
         log.info("GetMapping {roundId}/question/new");
         Round round = roundService.findOne(roundId);
-        model.addAttribute("questionForm", new QuestionForm());
+
+        QuestionForm questionForm = new QuestionForm();
+        for (int i=1; i<=4; i++) {
+            questionForm.addOptions("옵션" + Integer.toString(i));
+        }
+        for (int i=1; i<=5; i++) {
+            questionForm.addChoices("보기" + Integer.toString(i));
+        }
+
+        System.out.println("questionForm.toString() = " + questionForm.toString());
+
+        model.addAttribute("questionForm", questionForm);
         model.addAttribute("round", round);
+
 
         return "question/createQuestionForm";
     }
