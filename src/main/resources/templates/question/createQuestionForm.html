@@ -48,19 +48,22 @@
             <input type="text" id="photo" th:field="*{photo}" class="form-control"
                    placeholder="사진 입력">
         </div>
-
-        <label th:for="options">옵션</label>
-        <div class="form-group" th:each="option, iterStat : *{options}">
-            <input class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
+        <div class="form-group multiple-choice">
+            <label th:for="options">옵션</label>
+            <div th:each="option, iterStat : *{options}">
+                <input class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
+            </div>
         </div>
 
-        <label th:for="choices">선택지</label>
-        <div class="form-group" th:each="choice, iterStat : *{choices}">
-            <input class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
+        <div class="form-group multiple-choice">
+            <label th:for="choices">선택지</label>
+            <div th:each="choice, iterStat : *{choices}">
+                <input class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
+            </div>
         </div>
 
         <!-- ox 퀴즈 정답 -->
-        <div class="form-group">
+        <div class="form-group ox">
             <label th:for="ox">ox 정답</label>
             <div th:each="typeOpt, iterStat : ${T(rimgosu.cbthub.domain.question.CorrectWrong).values()}">
                 <input type="radio" th:field="*{oxChoiceAnswer}" th:value="${typeOpt}" th:id="${#ids.seq('typeOpt')}" th:checked="${iterStat.index == 0}"/>
@@ -69,8 +72,8 @@
         </div>
 
         <!-- 객관식 정답 -->
-        <label th:for="multipleChoiceAnswers">객관식 정답</label>
-        <div class="form-group">
+        <div class="form-group multiple-choice">
+            <label th:for="multipleChoiceAnswers">객관식 정답</label>
             <div th:each="multipleChoiceAnswer, iterStat : *{multipleChoiceAnswers}">
                 <!-- 숨겨진 입력 필드 추가. 기본적으로 'WRONG' 값을 가짐 -->
                 <input type="hidden" th:id="${'hiddenInput' + iterStat.index}" th:name="'multipleChoiceAnswers[' + ${iterStat.index} + ']'" value="WRONG" />
@@ -82,7 +85,7 @@
 
 
         <!-- 주관식 정답 -->
-        <div class="form-group">
+        <div class="form-group subjective">
             <label th:for="subjectiveAnswer">주관식 정답</label>
             <input type="text" id="subjectiveAnswer" th:field="*{subjectiveAnswer}" class="form-control"
                    placeholder="주관식 정답 입력">
@@ -114,6 +117,25 @@
 </div> <!-- /container -->
 
 <script>
+    window.onload = function() {
+        // 'typeOpt' 라디오 버튼 중 첫 번째를 선택합니다.
+        var firstRadioButton = document.querySelector('input[type=radio][name="questionType"]');
+        if (firstRadioButton) {
+            firstRadioButton.checked = true;
+        }
+
+        // 각 라디오 버튼에 대한 참조를 가져옵니다.
+        var typeRadios = document.querySelectorAll('input[type=radio][name="questionType"]');
+
+        // 각 라디오 버튼에 이벤트 리스너를 추가합니다.
+        typeRadios.forEach(function(radio) {
+            radio.addEventListener('change', handleTypeChange);
+        });
+
+        // 페이지 로드 시 초기 상태를 설정합니다.
+        updateVisibility();
+    };
+
     function updateValue(checkbox, index) {
         var hiddenInput = document.getElementById('hiddenInput' + index);
         if (checkbox.checked) {
@@ -122,7 +144,30 @@
             hiddenInput.disabled = false;
         }
     }
+
+    function handleTypeChange() {
+        updateVisibility();
+    }
+
+    function updateVisibility() {
+        // 선택된 라디오 버튼을 찾습니다.
+        var selectedType = document.querySelector('input[type=radio][name="questionType"]:checked').value;
+
+        // 각 섹션의 표시 여부를 설정합니다.
+        displaySection('multiple-choice', selectedType === 'MULTIPLE_CHOICE');
+        displaySection('subjective', selectedType === 'SUBJECTIVE');
+        displaySection('ox', selectedType === 'OX');
+    }
+
+    function displaySection(className, show) {
+        // 해당 클래스를 가진 모든 요소에 대해 처리합니다.
+        var elements = document.querySelectorAll('.' + className);
+        elements.forEach(function(element) {
+            element.style.display = show ? 'block' : 'none';
+        });
+    }
 </script>
+
 
 </body>
 </html>
