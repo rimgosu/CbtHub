@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rimgosu.cbthub.domain.question.Question;
-import rimgosu.cbthub.domain.round.Round;
 import rimgosu.cbthub.repository.QuestionRepository;
-import rimgosu.cbthub.repository.RoundRepository;
 
 import java.util.List;
 
@@ -22,18 +20,10 @@ public class QuestionService {
      */
     @Transactional
     public Long register(Question question) {
-        validataDuplicateRound(question); // 중복회원 검증
         questionRepository.save(question);
         return question.getId();
     }
 
-    private void validataDuplicateRound(Question question) {
-        // EXCEPTION
-        List<Question> findMembers = questionRepository.findByNumber(question.getNumber());
-        if (!findMembers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 문항입니다.");
-        }
-    }
 
     public List<Question> findMembers() {
         return questionRepository.findAll();

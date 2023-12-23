@@ -4,7 +4,6 @@ import lombok.*;
 import rimgosu.cbthub.domain.question.CorrectWrong;
 import rimgosu.cbthub.domain.question.QuestionType;
 
-import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,10 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Setter
 public class QuestionForm {
 
-    @Setter
-    @NotEmpty(message = "문제 번호는 필수입니다.")
     private int number;
 
     private QuestionType questionType;

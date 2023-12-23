@@ -48,4 +48,11 @@ public class RoundService {
     public List<Round> findByCategoryId(Long categoryId) {
         return roundRepository.findByCategoryId(categoryId);
     }
+
+    @Transactional
+    public void plusOneLastNumber(Long roundId, int number) {
+        Round findRound = roundRepository.findOne(roundId);
+        findRound.setLastQuestionNumber(number);
+    }
+
 }

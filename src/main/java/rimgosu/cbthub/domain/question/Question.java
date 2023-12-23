@@ -6,6 +6,7 @@ import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.round.Round;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,15 +37,15 @@ public class Question {
     private String photo;
 
     @ElementCollection
-    private List<String> options;
+    private List<String> options = new ArrayList<>();
 
     @ElementCollection
-    private List<String> choices;
+    private List<String> choices = new ArrayList<>();
 
     private CorrectWrong oxChoiceAnswer;
 
     @ElementCollection
-    private List<CorrectWrong> multipleChoiceAnswers;
+    private List<CorrectWrong> multipleChoiceAnswers = new ArrayList<>();
     private String subjectiveAnswer;
     private String commentary;
     private String gptCommentary;

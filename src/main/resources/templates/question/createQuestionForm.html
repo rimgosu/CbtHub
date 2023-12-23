@@ -37,7 +37,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <label th:for="whatQuestion">문제</label>
             <input required type="text" id="whatQuestion" th:field="*{whatQuestion}" class="form-control"
@@ -50,15 +49,15 @@
                    placeholder="사진 입력">
         </div>
 
-        <!--<label th:for="options">옵션</label>
+        <label th:for="options">옵션</label>
         <div class="form-group" th:each="option, iterStat : *{options}">
             <input class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
-        </div>-->
+        </div>
 
-        <!--<label th:for="choices">선택지</label>
+        <label th:for="choices">선택지</label>
         <div class="form-group" th:each="choice, iterStat : *{choices}">
             <input class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
-        </div>-->
+        </div>
 
         <!-- ox 퀴즈 정답 -->
         <div class="form-group">
@@ -70,13 +69,17 @@
         </div>
 
         <!-- 객관식 정답 -->
-        <!--<label th:for="multipleChoiceAnswers">객관식 정답</label>
+        <label th:for="multipleChoiceAnswers">객관식 정답</label>
         <div class="form-group">
             <div th:each="multipleChoiceAnswer, iterStat : *{multipleChoiceAnswers}">
-                <input type="checkbox" name="multipleChoiceAnswers[${iterStat.index}]" value="CORRECT" />
+                <!-- 숨겨진 입력 필드 추가. 기본적으로 'WRONG' 값을 가짐 -->
+                <input type="hidden" th:id="${'hiddenInput' + iterStat.index}" th:name="'multipleChoiceAnswers[' + ${iterStat.index} + ']'" value="WRONG" />
+                <!-- 체크박스 추가. 상태 변경 시 JavaScript 함수 호출 -->
+                <input type="checkbox" th:id="${'checkbox' + iterStat.index}" th:name="'multipleChoiceAnswers[' + ${iterStat.index} + ']'" value="CORRECT" th:onchange="'updateValue(this, ' + ${iterStat.index} + ')'" />
                 <label th:text="${iterStat.index+1}+'번'">선택지</label>
             </div>
-        </div>-->
+        </div>
+
 
         <!-- 주관식 정답 -->
         <div class="form-group">
@@ -109,6 +112,17 @@
     <br/>
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
+
+<script>
+    function updateValue(checkbox, index) {
+        var hiddenInput = document.getElementById('hiddenInput' + index);
+        if (checkbox.checked) {
+            hiddenInput.disabled = true;
+        } else {
+            hiddenInput.disabled = false;
+        }
+    }
+</script>
 
 </body>
 </html>

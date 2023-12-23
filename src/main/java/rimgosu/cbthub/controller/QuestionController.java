@@ -78,6 +78,7 @@ public class QuestionController {
         Question question = new Question(form.getNumber(), form.getQuestionType(), form.getWhatQuestion(), form.getPhoto(), form.getOptions(),
                 form.getChoices(), form.getOxChoiceAnswer(), form.getMultipleChoiceAnswers(), form.getSubjectiveAnswer(), form.getCommentary(), form.getGptCommentary(), round);
         questionService.register(question);
+        roundService.plusOneLastNumber(roundId, form.getNumber());
 
         return "redirect:/"+roundId+"/question/";
     }
