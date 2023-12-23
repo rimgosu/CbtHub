@@ -22,8 +22,8 @@
 
         <div class="form-group">
             <label th:for="number">번호</label>
-            <input required type="text" th:field="*{number}" class="form-control"
-                   placeholder="이름을 입력하세요"
+            <input readonly type="number" th:field="*{number}" th:value="*{number}" class="form-control"
+                   placeholder="번호를 입력하세요"
                    th:class="${#fields.hasErrors('number')}? 'form-control fieldError' : 'form-control'">
             <p th:if="${#fields.hasErrors('number')}"
                th:errors="*{number}">Incorrect date</p>
@@ -31,11 +31,12 @@
 
         <div class="form-group">
             <label th:for="type">타입</label>
-            <select th:field="*{questionType}">
-                <option th:each="typeOpt : ${T(rimgosu.cbthub.domain.question.QuestionType).values()}"
-                        th:value="${typeOpt}" th:text="${typeOpt}"></option>
-            </select>
+            <div th:each="typeOpt, iterStat : ${T(rimgosu.cbthub.domain.question.QuestionType).values()}">
+                <input type="radio" th:field="*{questionType}" th:value="${typeOpt}" th:id="${#ids.seq('typeOpt')}" th:checked="${iterStat.index == 0}"/>
+                <label th:for="${#ids.prev('typeOpt')}" th:text="${typeOpt}"></label>
+            </div>
         </div>
+
 
         <div class="form-group">
             <label th:for="whatQuestion">문제</label>
@@ -45,29 +46,58 @@
 
         <div class="form-group">
             <label th:for="photo">사진</label>
-            <input required type="text" id="photo" th:field="*{photo}" class="form-control"
+            <input type="text" id="photo" th:field="*{photo}" class="form-control"
                    placeholder="사진 입력">
         </div>
 
-        <label th:for="options">옵션</label>
+        <!--<label th:for="options">옵션</label>
         <div class="form-group" th:each="option, iterStat : *{options}">
-            <input required class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
-        </div>
-        <label th:for="choices">선택지</label>
+            <input class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
+        </div>-->
+
+        <!--<label th:for="choices">선택지</label>
         <div class="form-group" th:each="choice, iterStat : *{choices}">
-            <input required class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
-        </div>
+            <input class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
+        </div>-->
 
         <!-- ox 퀴즈 정답 -->
         <div class="form-group">
-            <label th:for="isO">ox퀴즈정답</label>
-            <select th:field="*{isO}">
-                <option value="true" th:text="'O'">O</option>
-                <option value="false" th:text="'X'">X</option>
-            </select>
+            <label th:for="ox">ox 정답</label>
+            <div th:each="typeOpt, iterStat : ${T(rimgosu.cbthub.domain.question.CorrectWrong).values()}">
+                <input type="radio" th:field="*{oxChoiceAnswer}" th:value="${typeOpt}" th:id="${#ids.seq('typeOpt')}" th:checked="${iterStat.index == 0}"/>
+                <label th:for="${#ids.prev('typeOpt')}" th:text="${typeOpt}"></label>
+            </div>
         </div>
-        
+
         <!-- 객관식 정답 -->
+        <!--<label th:for="multipleChoiceAnswers">객관식 정답</label>
+        <div class="form-group">
+            <div th:each="multipleChoiceAnswer, iterStat : *{multipleChoiceAnswers}">
+                <input type="checkbox" name="multipleChoiceAnswers[${iterStat.index}]" value="CORRECT" />
+                <label th:text="${iterStat.index+1}+'번'">선택지</label>
+            </div>
+        </div>-->
+
+        <!-- 주관식 정답 -->
+        <div class="form-group">
+            <label th:for="subjectiveAnswer">주관식 정답</label>
+            <input type="text" id="subjectiveAnswer" th:field="*{subjectiveAnswer}" class="form-control"
+                   placeholder="주관식 정답 입력">
+        </div>
+
+
+        <div class="form-group">
+            <label th:for="commentary">해설</label>
+            <input type="text" id="commentary" th:field="*{commentary}" class="form-control"
+                   placeholder="해설 입력">
+        </div>
+
+        <div class="form-group">
+            <label th:for="gptCommentary">gpt 해설 입력</label>
+            <input type="text" id="gptCommentary" th:field="*{gptCommentary}" class="form-control"
+                   placeholder="gpt 해설 입력">
+        </div>
+
 
 
 

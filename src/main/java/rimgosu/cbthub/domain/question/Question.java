@@ -2,10 +2,8 @@ package rimgosu.cbthub.domain.question;
 
 import lombok.*;
 import rimgosu.cbthub.domain.board.QuestionComment;
-import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.round.Round;
-import rimgosu.cbthub.domain.round.RoundInfo;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -43,8 +41,10 @@ public class Question {
     @ElementCollection
     private List<String> choices;
 
-    private Boolean isO;
-    private int multipleChoiceAnswer;
+    private CorrectWrong oxChoiceAnswer;
+
+    @ElementCollection
+    private List<CorrectWrong> multipleChoiceAnswers;
     private String subjectiveAnswer;
     private String commentary;
     private String gptCommentary;
@@ -66,8 +66,8 @@ public class Question {
             String photo,
             List<String> options,
             List<String> choices,
-            Boolean isO,
-            int multipleChoiceAnswer,
+            CorrectWrong oxChoiceAnswer,
+            List<CorrectWrong> multipleChoiceAnswers,
             String subjectiveAnswer,
             String commentary,
             String gptCommentary,
@@ -78,8 +78,8 @@ public class Question {
         this.photo = photo;
         this.options = options;
         this.choices = choices;
-        this.isO = isO;
-        this.multipleChoiceAnswer = multipleChoiceAnswer;
+        this.oxChoiceAnswer = oxChoiceAnswer;
+        this.multipleChoiceAnswers = multipleChoiceAnswers;
         this.subjectiveAnswer = subjectiveAnswer;
         this.commentary = commentary;
         this.gptCommentary = gptCommentary;

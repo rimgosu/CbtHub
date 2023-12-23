@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import rimgosu.cbthub.controller.forms.QuestionForm;
+import rimgosu.cbthub.domain.question.CorrectWrong;
 import rimgosu.cbthub.domain.question.Question;
 import rimgosu.cbthub.domain.round.Round;
 import rimgosu.cbthub.service.QuestionService;
 import rimgosu.cbthub.service.RoundService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -49,9 +48,11 @@ public class QuestionController {
         }
         for (int i=1; i<=5; i++) {
             questionForm.addChoices("보기" + Integer.toString(i));
+            questionForm.addMultipleChoiceAnswer(CorrectWrong.WRONG);
         }
 
-        System.out.println("questionForm.toString() = " + questionForm.toString());
+        int lastQuestionNumber = round.getLastQuestionNumber();
+        questionForm.setNumber(lastQuestionNumber+1);
 
         model.addAttribute("questionForm", questionForm);
         model.addAttribute("round", round);
@@ -63,6 +64,7 @@ public class QuestionController {
     @PostMapping("{roundId}/question/new")
     public String create(@PathVariable Long roundId ,@Valid QuestionForm form, BindingResult result) {
         log.info("PostMapping {roundId}/question/new");
+        System.out.println("form.toString() = " + form.toString());
 
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> {
@@ -74,7 +76,7 @@ public class QuestionController {
         Round round = roundService.findOne(roundId);
 
         Question question = new Question(form.getNumber(), form.getQuestionType(), form.getWhatQuestion(), form.getPhoto(), form.getOptions(),
-                form.getChoices(), form.getIsO(), form.getMultipleChoiceAnswer(), form.getSubjectiveAnswer(), form.getCommentary(), form.getGptCommentary(), round);
+                form.getChoices(), form.getOxChoiceAnswer(), form.getMultipleChoiceAnswers(), form.getSubjectiveAnswer(), form.getCommentary(), form.getGptCommentary(), round);
         questionService.register(question);
 
         return "redirect:/"+roundId+"/question/";
