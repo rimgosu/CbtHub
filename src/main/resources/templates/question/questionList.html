@@ -4,24 +4,47 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
     <div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>회차</th>
-                <th>접수</th>
-                <th>응시</th>
-                <th>합격</th>
-                <th>시행일</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="question : ${questions}">
-                <td th:text="${question.number}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <h1 th:text="${round.roundName}"></h1>
+    </div>
+    <div>
+        <div class="exam_item" exam_srl="100193" type="C">
+            <div class="exam_question">
+                <a class="exam_title" href="/index.php?mid=exam&amp;exam_srl=100193"><span class="exam_no">1. </span>
+                    <span style="">다음 중 스캐너 관련 API로 알맞은 것은?</span></a>
+            </div>
+            <div class="exam_answer">
+                <li class="exam_answer" exam_srl="100193">
+                    <a class="answer_select" href="javascript:void(0)" onclick="select_answer(100193,1)">
+                        <div class="exam_no_select no-drag selected_answer" id="exam_answer_select" exam_srl="100193" answer="1">
+                            <span class="select_num">1</span>
+                        </div>
+                        OSS								</a>
+                </li>
+                <li class="exam_answer" exam_srl="100193">
+                    <a class="answer_select" href="javascript:void(0)" onclick="select_answer(100193,2)">
+                        <div class="exam_no_select no-drag" id="exam_answer_select" exam_srl="100193" answer="2">
+                            <span class="select_num">2</span>
+                        </div>
+                        ALSA								</a>
+                </li>
+                <li class="exam_answer" exam_srl="100193">
+                    <a class="answer_select" href="javascript:void(0)" onclick="select_answer(100193,3)">
+                        <div class="exam_no_select no-drag" id="exam_answer_select" exam_srl="100193" answer="3">
+                            <span class="select_num">3</span>
+                        </div>
+                        SANE								</a>
+                </li>
+                <li class="exam_answer" exam_srl="100193">
+                    <a class="answer_select" href="javascript:void(0)" onclick="select_answer(100193,4)">
+                        <div class="exam_no_select no-drag" id="exam_answer_select" exam_srl="100193" answer="4">
+                            <span class="select_num">4</span>
+                        </div>
+                        CUPS								</a>
+                </li>
+            </div>
+            <input type="hidden" name="exam_answer" exam_srl="100193" value="1"></div>
     </div>
 
     문제 추가하기
