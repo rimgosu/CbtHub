@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="questionFragment(questions)">
+    <div th:each="question : ${questions}">
+        <div class="exam_item" type="C">
+            <div class="exam_question">
+                <a th:href="@{/question/{id}(id=${question.id})}" class="one-question">
+                    <strong><span class="exam_no" th:text="${question.number}+'.'"></span></strong>
+                    <span th:text="${question.whatQuestion}">질문 제목</span>
+                </a>
+            </div>
+            <div class="exam_answer">
+                <ul class="question-ul">
+                    <li th:each="answer, answerStat : ${question.choices}"
+                        th:if="${answer != null and !answer.isEmpty()}"
+                        class="exam_answer">
+                        <a href="#" class="one-question">
+                            <span th:switch="${answerStat.count}">
+                                <span th:case="1">①</span>
+                                <span th:case="2">②</span>
+                                <span th:case="3">③</span>
+                                <span th:case="4">④</span>
+                                <span th:case="5">⑤</span>
+                            </span>
+                            <span th:text="${answer}">답변 내용</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" name="exam_answer" value="1">
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -83,5 +83,15 @@ public class QuestionController {
         return "redirect:/"+roundId+"/question/";
     }
 
+    @GetMapping("/question/{questionId}")
+    public String oneList(@PathVariable Long questionId, Model model) {
+        log.info("GetMapping {questionId}/question/");
+        Question questions = questionService.findOne(questionId);
+        Round round = questions.getRound();
+        model.addAttribute("questions", questions);
+        model.addAttribute("round", round);
+        return "question/questionOneList";
+    }
+
 
 }
