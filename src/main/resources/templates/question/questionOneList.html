@@ -8,15 +8,17 @@
     <div>
         <h1 th:text="${round.roundName}"></h1>
     </div>
-    <div th:replace="fragments/questionFragment :: questionFragment(${questions})"></div>
+    <form action="/question/submit">
+        <div th:replace="fragments/questionFragment :: questionFragment(${questions})"></div>
 
-    <div class="button-container">
-        <button class="btn btn-primary">정답 확인</button>
-        <div class="button-group">
-            <button class="btn btn-danger">이전 문제</button>
-            <button class="btn btn-danger">다음 문제</button>
+        <div class="button-container">
+            <input type="submit" class="btn btn-primary" value="정답 확인" />
+            <div class="button-group">
+                <input class="btn btn-danger">이전 문제</input>
+                <input class="btn btn-danger">다음 문제</input>
+            </div>
         </div>
-    </div>
+    </form>
 
     문제 추가하기
     <a th:href="@{/{id}/question/new(id=${round.id})}" th:text="${round.roundName}"></a>
