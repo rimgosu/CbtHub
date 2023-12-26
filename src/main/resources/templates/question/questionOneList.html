@@ -10,9 +10,13 @@
     </div>
     <div th:replace="fragments/questionFragment :: questionFragment(${questions})"></div>
 
-    <button class="btn btn-primary">정답 확인</button><br>
-    <button class="btn btn-danger">이전 문제</button>
-    <button class="btn btn-danger">다음 문제</button><br>
+    <div class="button-container">
+        <button class="btn btn-primary">정답 확인</button>
+        <div class="button-group">
+            <button class="btn btn-danger">이전 문제</button>
+            <button class="btn btn-danger">다음 문제</button>
+        </div>
+    </div>
 
     문제 추가하기
     <a th:href="@{/{id}/question/new(id=${round.id})}" th:text="${round.roundName}"></a>
@@ -21,6 +25,32 @@
 
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const questions = document.querySelectorAll(".exam_item");
+
+        questions.forEach((question, index) => {
+            const answers = question.querySelectorAll(".exam_answer li");
+            const inputHidden = document.getElementById('selectedAnswers-' + (index + 1));
+            let answerValues = new Array(answers.length).fill('WRONG');
+
+            answers.forEach((answer, answerIndex) => {
+                answer.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    if (answerValues[answerIndex] === 'WRONG') {
+                        answerValues[answerIndex] = 'CORRECT';
+                        answer.style.backgroundColor = 'pink';
+                    } else {
+                        answerValues[answerIndex] = 'WRONG';
+                        answer.style.backgroundColor = '';
+                    }
+                    inputHidden.value = JSON.stringify(answerValues);
+                });
+            });
+        });
+    });
+</script>
 
 
 </body>

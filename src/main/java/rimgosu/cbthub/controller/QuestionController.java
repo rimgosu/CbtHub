@@ -93,5 +93,12 @@ public class QuestionController {
         return "question/questionOneList";
     }
 
+    @PostMapping("/question/submit")
+    public String answerSubmit(@Valid QuestionForm form, Model model) {
+        log.info("PostMapping {questionId}/question/");
+        System.out.println("form = " + form.toString());
+        return "question/questionOneList";
+    }
+
 
 }

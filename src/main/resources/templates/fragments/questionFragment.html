@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="questionFragment(questions)">
-    <div th:each="question : ${questions}">
-        <div class="exam_item" type="C">
+    <form action="/question/submit">
+        <div th:each="question, questionStat : ${questions}" class="exam_item" type="C">
+            <input type="hidden" th:field="${question.id}">
             <div class="exam_question">
                 <a th:href="@{/question/{id}(id=${question.id})}" class="one-question">
                     <strong><span class="exam_no" th:text="${question.number}+'.'"></span></strong>
@@ -11,9 +12,10 @@
                 </a>
             </div>
             <div class="exam_answer">
-                <ul class="question-ul">
+                <ul class="question-ul" id="">
                     <li th:each="answer, answerStat : ${question.choices}"
                         th:if="${answer != null and !answer.isEmpty()}"
+                        th:id="'answer-' + ${answerStat.count}"
                         class="exam_answer">
                         <a href="#" class="one-question">
                             <span th:switch="${answerStat.count}">
@@ -25,12 +27,14 @@
                             </span>
                             <span th:text="${answer}">답변 내용</span>
                         </a>
+                        <!--<input type="hidden" th:name="${question.multipleChoiceAnswers}">-->
                     </li>
                 </ul>
             </div>
-            <input type="hidden" name="exam_answer" value="1">
         </div>
-    </div>
+    </form>
+
 </div>
+
 </body>
 </html>
