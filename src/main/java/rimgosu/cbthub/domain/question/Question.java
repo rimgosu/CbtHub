@@ -2,12 +2,11 @@ package rimgosu.cbthub.domain.question;
 
 import lombok.*;
 import rimgosu.cbthub.domain.board.QuestionComment;
-import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.round.Round;
-import rimgosu.cbthub.domain.round.RoundInfo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,13 +37,15 @@ public class Question {
     private String photo;
 
     @ElementCollection
-    private List<String> options;
+    private List<String> options = new ArrayList<>();
 
     @ElementCollection
-    private List<String> choices;
+    private List<String> choices = new ArrayList<>();
 
-    private Boolean isO;
-    private int multipleChoiceAnswer;
+    private CorrectWrong oxChoiceAnswer;
+
+    @ElementCollection
+    private List<CorrectWrong> multipleChoiceAnswers = new ArrayList<>();
     private String subjectiveAnswer;
     private String commentary;
     private String gptCommentary;
@@ -66,8 +67,8 @@ public class Question {
             String photo,
             List<String> options,
             List<String> choices,
-            Boolean isO,
-            int multipleChoiceAnswer,
+            CorrectWrong oxChoiceAnswer,
+            List<CorrectWrong> multipleChoiceAnswers,
             String subjectiveAnswer,
             String commentary,
             String gptCommentary,
@@ -78,8 +79,8 @@ public class Question {
         this.photo = photo;
         this.options = options;
         this.choices = choices;
-        this.isO = isO;
-        this.multipleChoiceAnswer = multipleChoiceAnswer;
+        this.oxChoiceAnswer = oxChoiceAnswer;
+        this.multipleChoiceAnswers = multipleChoiceAnswers;
         this.subjectiveAnswer = subjectiveAnswer;
         this.commentary = commentary;
         this.gptCommentary = gptCommentary;
