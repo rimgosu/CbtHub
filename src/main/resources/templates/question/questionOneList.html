@@ -5,23 +5,55 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
-    <div>
-        <h1 th:text="${round.roundName}"></h1>
-    </div>
-    <form action="/question/submit">
-        <div th:replace="fragments/questionFragment :: questionFragment(${questions})"></div>
-
-        <div class="button-container">
-            <input type="submit" class="btn btn-primary" value="정답 확인" />
-            <div class="button-group">
-                <input class="btn btn-danger">이전 문제</input>
-                <input class="btn btn-danger">다음 문제</input>
+    <h2 th:text="${round.roundName}"></h2>
+    <div class="question-item multiple-choice">
+        <div class="question-header">
+            <strong>
+            <span class="question-number" th:text="${question.number}+'.'"></span>
+            <span class="question-what" th:text="${question.whatQuestion}"></span>
+            </strong>
+        </div>
+        <div class="question-body">
+            <div class="question-photo"></div>
+            <div class="question-options">
+                <ul class="options-ul">
+                    <li class="option-li" th:text="${question.options.option1}"></li>
+                    <li class="option-li" th:text="${question.options.option2}"></li>
+                    <li class="option-li" th:text="${question.options.option3}"></li>
+                    <li class="option-li" th:text="${question.options.option4}"></li>
+                    <li class="option-li" th:text="${question.options.option5}"></li>
+                </ul>
             </div>
         </div>
-    </form>
+        <div class="question-choices">
+            <ul class="choices-ul">
+                <li class="choice-li" th:if="${question.choices.choice1 != ''}" th:text="'① ' + ${question.choices.choice1}"></li>
+                <li class="choice-li" th:if="${question.choices.choice2 != ''}" th:text="'② ' + ${question.choices.choice2}"></li>
+                <li class="choice-li" th:if="${question.choices.choice3 != ''}" th:text="'③ ' + ${question.choices.choice3}"></li>
+                <li class="choice-li" th:if="${question.choices.choice4 != ''}" th:text="'④ ' + ${question.choices.choice4}"></li>
+                <li class="choice-li" th:if="${question.choices.choice5 != ''}" th:text="'⑤ ' + ${question.choices.choice5}"></li>
+            </ul>
+        </div>
 
-    문제 추가하기
-    <a th:href="@{/{id}/question/new(id=${round.id})}" th:text="${round.roundName}"></a>
+        <div class="check-answer">
+            <div class="question-submit">
+                <form method="post" action="/question/submit">
+                    <input type="hidden" th:value="${question.id}" name="questionId"/>
+
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer1"/>
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer2"/>
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer3"/>
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer4"/>
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer5"/>
+
+                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.logs.QuestionLogType).UNSOLVED}" name="questionLogType"/>
+
+                    <button type="submit" id="submitButton" class="btn btn-primary">정답확인</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
 
 
 
@@ -29,29 +61,6 @@
 </div> <!-- /container -->
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const questions = document.querySelectorAll(".exam_item");
-
-        questions.forEach((question, index) => {
-            const answers = question.querySelectorAll(".exam_answer li");
-            const inputHidden = document.getElementById('selectedAnswers-' + (index + 1));
-            let answerValues = new Array(answers.length).fill('WRONG');
-
-            answers.forEach((answer, answerIndex) => {
-                answer.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    if (answerValues[answerIndex] === 'WRONG') {
-                        answerValues[answerIndex] = 'CORRECT';
-                        answer.style.backgroundColor = 'pink';
-                    } else {
-                        answerValues[answerIndex] = 'WRONG';
-                        answer.style.backgroundColor = '';
-                    }
-                    inputHidden.value = JSON.stringify(answerValues);
-                });
-            });
-        });
-    });
 </script>
 
 

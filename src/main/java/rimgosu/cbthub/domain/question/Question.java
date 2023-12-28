@@ -36,16 +36,17 @@ public class Question {
     private String whatQuestion;
     private String photo;
 
-    @ElementCollection
-    private List<String> options = new ArrayList<>();
+    @Embedded
+    private Options options;
 
-    @ElementCollection
-    private List<String> choices = new ArrayList<>();
+    @Embedded
+    private Choices choices;
 
-    private CorrectWrong oxChoiceAnswer;
+    @Enumerated(EnumType.STRING)
+    private OX oxChoiceAnswer;
 
-    @ElementCollection
-    private List<CorrectWrong> multipleChoiceAnswers = new ArrayList<>();
+    @Embedded
+    private MultipleChoiceAnswers multipleChoiceAnswers;
     private String subjectiveAnswer;
     private String commentary;
     private String gptCommentary;
@@ -65,10 +66,10 @@ public class Question {
             QuestionType type,
             String whatQuestion,
             String photo,
-            List<String> options,
-            List<String> choices,
-            CorrectWrong oxChoiceAnswer,
-            List<CorrectWrong> multipleChoiceAnswers,
+            Options options,
+            Choices choices,
+            OX oxChoiceAnswer,
+            MultipleChoiceAnswers multipleChoiceAnswers,
             String subjectiveAnswer,
             String commentary,
             String gptCommentary,

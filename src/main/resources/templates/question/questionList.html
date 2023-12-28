@@ -5,10 +5,29 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
+    <h2 th:text="${round.roundName}"></h2>
     <div>
-        <h1 th:text="${round.roundName}"></h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>문제 id</th>
+                <th>문제 번호</th>
+                <th>문제</th>
+                <th>타입</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="question : ${questions}">
+                <td th:text="${question.id}"></td>
+                <td><a th:href="@{/question/{id}(id=${question.id})}" th:text="${question.number}"></a></td>
+                <td th:text="${question.whatQuestion}"></td>
+                <td th:text="${question.type}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <div th:replace="fragments/questionFragment :: questionFragment(${questions})"></div>
+
+
 
     문제 추가하기
     <a th:href="@{/{id}/question/new(id=${round.id})}" th:text="${round.roundName}"></a>

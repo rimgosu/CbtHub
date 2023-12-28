@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import rimgosu.cbthub.controller.forms.CategoryForm;
 import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.service.CategoryService;

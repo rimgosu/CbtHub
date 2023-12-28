@@ -48,41 +48,54 @@
             <input type="text" id="photo" th:field="*{photo}" class="form-control"
                    placeholder="사진 입력">
         </div>
+
+
         <div class="form-group multiple-choice">
-            <label th:for="options">옵션</label>
-            <div th:each="option, iterStat : *{options}">
-                <input class="form-control" type="text" th:name="'options[' + ${iterStat.index} + ']'" th:placeholder="${option}" />
-            </div>
+            <label th:for="options">보기(옵션)</label>
+            <input type="text" th:field="*{option1}" class="form-control" placeholder="보기1">
+            <input type="text" th:field="*{option2}" class="form-control" placeholder="보기2">
+            <input type="text" th:field="*{option3}" class="form-control" placeholder="보기3">
+            <input type="text" th:field="*{option4}" class="form-control" placeholder="보기4">
+            <input type="text" th:field="*{option5}" class="form-control" placeholder="보기5">
         </div>
+
 
         <div class="form-group multiple-choice">
             <label th:for="choices">선택지</label>
-            <div th:each="choice, iterStat : *{choices}">
-                <input class="form-control" type="text" th:name="'choices[' + ${iterStat.index} + ']'" th:placeholder="${choice}" />
-            </div>
+            <input type="text" th:field="*{choice1}" class="form-control" placeholder="선지1">
+            <input type="text" th:field="*{choice2}" class="form-control" placeholder="선지2">
+            <input type="text" th:field="*{choice3}" class="form-control" placeholder="선지3">
+            <input type="text" th:field="*{choice4}" class="form-control" placeholder="선지4">
+            <input type="text" th:field="*{choice5}" class="form-control" placeholder="선지5">
+        </div>
+
+        <div class="form-group multiple-choice">
+            <label th:for="multipleChoiceAnswers">선지 정답</label>
+            1.
+            <input type="checkbox" id="multipleChoiceAnswer1" name="multipleChoiceAnswer1" th:value="${T(rimgosu.cbthub.domain.question.OX).O}"/>
+            <input type="hidden" id="hiddenMultipleChoiceAnswer1" name="multipleChoiceAnswer1" th:value="${T(rimgosu.cbthub.domain.question.OX).X}"/>
+            2.
+            <input type="checkbox" id="multipleChoiceAnswer2" name="multipleChoiceAnswer2" th:value="${T(rimgosu.cbthub.domain.question.OX).O}"/>
+            <input type="hidden" id="hiddenMultipleChoiceAnswer2" name="multipleChoiceAnswer2" th:value="${T(rimgosu.cbthub.domain.question.OX).X}"/>
+            3.
+            <input type="checkbox" id="multipleChoiceAnswer3" name="multipleChoiceAnswer3" th:value="${T(rimgosu.cbthub.domain.question.OX).O}"/>
+            <input type="hidden" id="hiddenMultipleChoiceAnswer3" name="multipleChoiceAnswer3" th:value="${T(rimgosu.cbthub.domain.question.OX).X}"/>
+            4.
+            <input type="checkbox" id="multipleChoiceAnswer4" name="multipleChoiceAnswer4" th:value="${T(rimgosu.cbthub.domain.question.OX).O}"/>
+            <input type="hidden" id="hiddenMultipleChoiceAnswer4" name="multipleChoiceAnswer4" th:value="${T(rimgosu.cbthub.domain.question.OX).X}"/>
+            5.
+            <input type="checkbox" id="multipleChoiceAnswer5" name="multipleChoiceAnswer5" th:value="${T(rimgosu.cbthub.domain.question.OX).O}"/>
+            <input type="hidden" id="hiddenMultipleChoiceAnswer5" name="multipleChoiceAnswer5" th:value="${T(rimgosu.cbthub.domain.question.OX).X}"/>
         </div>
 
         <!-- ox 퀴즈 정답 -->
         <div class="form-group ox">
             <label th:for="ox">ox 정답</label>
-            <div th:each="typeOpt, iterStat : ${T(rimgosu.cbthub.domain.question.CorrectWrong).values()}">
+            <div th:each="typeOpt, iterStat : ${T(rimgosu.cbthub.domain.question.OX).values()}">
                 <input type="radio" th:field="*{oxChoiceAnswer}" th:value="${typeOpt}" th:id="${#ids.seq('typeOpt')}" th:checked="${iterStat.index == 0}"/>
                 <label th:for="${#ids.prev('typeOpt')}" th:text="${typeOpt}"></label>
             </div>
         </div>
-
-        <!-- 객관식 정답 -->
-        <div class="form-group multiple-choice">
-            <label th:for="multipleChoiceAnswers">객관식 정답</label>
-            <div th:each="multipleChoiceAnswer, iterStat : *{multipleChoiceAnswers}">
-                <!-- 숨겨진 입력 필드 추가. 기본적으로 'WRONG' 값을 가짐 -->
-                <input type="hidden" th:id="${'hiddenInput' + iterStat.index}" th:name="'multipleChoiceAnswers[' + ${iterStat.index} + ']'" value="WRONG" />
-                <!-- 체크박스 추가. 상태 변경 시 JavaScript 함수 호출 -->
-                <input type="checkbox" th:id="${'checkbox' + iterStat.index}" th:name="'multipleChoiceAnswers[' + ${iterStat.index} + ']'" value="CORRECT" th:onchange="'updateValue(this, ' + ${iterStat.index} + ')'" />
-                <label th:text="${iterStat.index+1}+'번'">선택지</label>
-            </div>
-        </div>
-
 
         <!-- 주관식 정답 -->
         <div class="form-group subjective">
@@ -166,6 +179,7 @@
             element.style.display = show ? 'block' : 'none';
         });
     }
+
 </script>
 
 
