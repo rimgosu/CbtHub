@@ -12,7 +12,6 @@ import rimgosu.cbthub.domain.question.OX;
 @Setter
 public class QuestionLogForm {
 
-    private Long memberId;
     private Long questionId;
 
     private QuestionLogType questionLogType;

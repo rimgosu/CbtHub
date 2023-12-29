@@ -37,7 +37,7 @@
 
         <div class="check-answer">
             <div class="question-submit">
-                <form method="post" action="/question/submit">
+                <form method="post" action="/questionLog/submit">
                     <input type="hidden" th:value="${question.id}" name="questionId"/>
 
                     <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer1"/>
