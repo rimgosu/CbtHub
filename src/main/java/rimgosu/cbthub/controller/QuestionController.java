@@ -2,6 +2,7 @@ package rimgosu.cbthub.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,8 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import rimgosu.cbthub.controller.forms.QuestionForm;
+import rimgosu.cbthub.domain.Member.Member;
+import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.question.*;
 import rimgosu.cbthub.domain.round.Round;
+import rimgosu.cbthub.service.MemberService;
+import rimgosu.cbthub.service.QuestionLogService;
 import rimgosu.cbthub.service.QuestionService;
 import rimgosu.cbthub.service.RoundService;
 
@@ -24,6 +29,8 @@ public class QuestionController {
 
     private final RoundService roundService;
     private final QuestionService questionService;
+    private final QuestionLogService questionLogService;
+    private final MemberService memberService;
 
     @GetMapping("{roundId}/question/")
     public String list(@PathVariable Long roundId, Model model) {
@@ -83,12 +90,24 @@ public class QuestionController {
     }
 
     @GetMapping("/question/{questionId}")
-    public String oneList(@PathVariable Long questionId, Model model) {
+    public String oneList(@PathVariable Long questionId, Model model, Authentication authentication) {
+        /**
+         * 요구사항
+         * 1. user가 처음으로 문제를 마주했을 땐, lastQuestionLog의 값이 비어있어야한다.
+         * 2. 문제를 보면, QuestionLog의 값이 unsolved 상태여야한다.
+         * 3. 문제를 풀면 unsolved 상태의 questionLog가 correct 또는 wrong의 값으로 수정되어야한다.
+         */
         log.info("GetMapping {questionId}/question/");
         Question question = questionService.findOne(questionId);
         Round round = question.getRound();
+        String username = authentication.getName();
+        List<Member> byUsername = memberService.findByUsername(username);
+
+        QuestionLog lastQuestionLog = questionLogService.findTopByMemberIdOrderByIdDesc(byUsername.getFirst().getId());
+
         model.addAttribute("question", question);
         model.addAttribute("round", round);
+        model.addAttribute("lastQuestionLog", lastQuestionLog);
         return "question/questionOneList";
     }
 

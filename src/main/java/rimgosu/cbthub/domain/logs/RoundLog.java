@@ -1,13 +1,15 @@
 package rimgosu.cbthub.domain.logs;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import rimgosu.cbthub.domain.Member.Member;
 import rimgosu.cbthub.domain.round.Round;
 
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -25,7 +27,7 @@ public class RoundLog {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     private Round round;
 
     @OneToMany(mappedBy = "roundLog")

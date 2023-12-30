@@ -10,4 +10,7 @@ import java.util.List;
 public interface QuestionLogRepository extends JpaRepository<QuestionLog, Long> {
     // question_id를 이용하여 QuestionLog를 찾는 메서드
     List<QuestionLog> findByQuestion_Id(Long questionId);
+    QuestionLog findTopByMemberIdOrderByIdDesc(Long memberId);
+
+
 }

@@ -26,7 +26,7 @@ public class CategoryLog {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY, cascade = ALL)
     private Category category;
 
     @OneToMany(mappedBy = "categoryLog")

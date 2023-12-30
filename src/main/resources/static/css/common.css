@@ -24,3 +24,8 @@
     margin-bottom: 10px;
     border: #1b1e21 solid 1px;
 }
+
+/* 문제 풀이 시 li의 a태그 색 동결*/
+body > div > div.question-item.multiple-choice > div.question-choices > ul > li > a {
+    color: #000000;
+}

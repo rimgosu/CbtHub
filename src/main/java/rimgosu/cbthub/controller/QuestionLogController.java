@@ -59,6 +59,7 @@ public class QuestionLogController {
 
             model.addAttribute("round", round);
             model.addAttribute("question", findQuestion);
+            model.addAttribute("lastQuestionLog", questionLog);
 
             return "question/questionOneList";
         }

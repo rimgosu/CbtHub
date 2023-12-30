@@ -1,12 +1,14 @@
 package rimgosu.cbthub.domain.round;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import rimgosu.cbthub.domain.category.Category;
 import rimgosu.cbthub.domain.logs.RoundLog;
 import rimgosu.cbthub.domain.question.Question;
 
 import javax.persistence.*;
-
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -32,8 +34,8 @@ public class Round {
     @Embedded
     private RoundInfo roundInfo;
 
-    @OneToOne(mappedBy = "round", fetch = LAZY)
-    private RoundLog roundLog;
+    @OneToMany(mappedBy = "round")
+    private List<RoundLog> roundLogs;
 
     @OneToMany(mappedBy = "round", fetch = LAZY)
     private List<Question> questions;

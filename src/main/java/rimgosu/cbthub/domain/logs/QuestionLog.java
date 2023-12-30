@@ -9,7 +9,6 @@ import rimgosu.cbthub.domain.question.Question;
 import javax.persistence.*;
 import java.util.Date;
 
-import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -29,7 +28,7 @@ public class QuestionLog {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 

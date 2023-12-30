@@ -27,27 +27,33 @@
         </div>
         <div class="question-choices">
             <ul class="choices-ul">
-                <li class="choice-li" th:if="${question.choices.choice1 != ''}" onclick="toggleChoice(1)" th:text="'① ' + ${question.choices.choice1}"></li>
-                <li class="choice-li" th:if="${question.choices.choice2 != ''}" onclick="toggleChoice(2)" th:text="'② ' + ${question.choices.choice2}"></li>
-                <li class="choice-li" th:if="${question.choices.choice3 != ''}" onclick="toggleChoice(3)" th:text="'③ ' + ${question.choices.choice3}"></li>
-                <li class="choice-li" th:if="${question.choices.choice4 != ''}" onclick="toggleChoice(4)" th:text="'④ ' + ${question.choices.choice4}"></li>
-                <li class="choice-li" th:if="${question.choices.choice5 != ''}" onclick="toggleChoice(5)" th:text="'⑤ ' + ${question.choices.choice5}"></li>
+                <li class="choice-li"><a href="#" onclick="toggleChoice(1); return false;" th:if="${question.choices.choice1 != ''}" th:text="'① ' + ${question.choices.choice1}"></a></li>
+                <li class="choice-li"><a href="#" onclick="toggleChoice(2); return false;" th:if="${question.choices.choice2 != ''}" th:text="'② ' + ${question.choices.choice2}"></a></li>
+                <li class="choice-li"><a href="#" onclick="toggleChoice(3); return false;" th:if="${question.choices.choice3 != ''}" th:text="'③ ' + ${question.choices.choice3}"></a></li>
+                <li class="choice-li"><a href="#" onclick="toggleChoice(4); return false;" th:if="${question.choices.choice4 != ''}" th:text="'④ ' + ${question.choices.choice4}"></a></li>
+                <li class="choice-li"><a href="#" onclick="toggleChoice(5); return false;" th:if="${question.choices.choice5 != ''}" th:text="'⑤ ' + ${question.choices.choice5}"></a></li>
             </ul>
         </div>
         <div class="check-answer">
             <div class="question-submit">
                 <form method="post" action="/questionLog/submit">
+
+                    <input type="hidden" th:value="${question.id}" name="questionId"/>
+
                     <input type="hidden" id="choice1" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer1"/>
                     <input type="hidden" id="choice2" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer2"/>
                     <input type="hidden" id="choice3" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer3"/>
                     <input type="hidden" id="choice4" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer4"/>
                     <input type="hidden" id="choice5" th:value="${T(rimgosu.cbthub.domain.question.OX).X}" name="choseMultipleChoiceAnswer5"/>
 
-                    <input type="hidden" th:value="${T(rimgosu.cbthub.domain.logs.QuestionLogType).UNSOLVED}" name="questionLogType"/>
                     <input type="hidden" th:value="${T(rimgosu.cbthub.domain.question.QuestionType).MULTIPLE_CHOICE}" name="questionType"/>
 
                     <button type="submit" id="submitButton" class="btn btn-primary">정답확인</button>
                 </form>
+            </div>
+
+            <div th:if="${lastQuestionLog != null}">lastQuestionLog !=null
+                <span th:text="${lastQuestionLog.toString()}"></span>
             </div>
         </div>
     </div>
@@ -58,20 +64,20 @@
 <script>
     function toggleChoice(choiceNumber) {
         var choiceElement = document.getElementById('choice' + choiceNumber);
-        var liElement = choiceElement.parentNode.querySelector('.choice-li:nth-child(' + choiceNumber + ')');
+        var liElement = document.querySelector('.choice-li:nth-child(' + choiceNumber + ') a');
 
         // 값 변경
-        if (choiceElement.value === '${T(rimgosu.cbthub.domain.question.OX).X}') {
-            choiceElement.value = '${T(rimgosu.cbthub.domain.question.OX).O}';
+        if (choiceElement.value === 'X') {
+            choiceElement.value = 'O';
         } else {
-            choiceElement.value = '${T(rimgosu.cbthub.domain.question.OX).X}';
+            choiceElement.value = 'X';
         }
 
         // 색상 변경
-        if (liElement.style.backgroundColor === 'pink') {
-            liElement.style.backgroundColor = '';
+        if (liElement.style.color === 'blue') {
+            liElement.style.color = '';
         } else {
-            liElement.style.backgroundColor = 'pink';
+            liElement.style.color = 'blue';
         }
     }
 </script>

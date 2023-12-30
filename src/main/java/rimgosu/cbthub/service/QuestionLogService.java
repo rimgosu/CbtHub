@@ -40,11 +40,23 @@ public class QuestionLogService {
         return questionLogRepository.findByQuestion_Id(questionId);
     }
 
+    public QuestionLog findTopByMemberIdOrderByIdDesc(Long memberId) {
+        return questionLogRepository.findTopByMemberIdOrderByIdDesc(memberId);
+    }
+
     public QuestionLogType checkCorrect(MultipleChoiceAnswers multipleChoiceAnswers, MultipleChoiceAnswers choseMultipleChoiceAnswers) {
-        if (multipleChoiceAnswers.equals(choseMultipleChoiceAnswers)) {
+        System.out.println("multipleChoiceAnswers.toString() = " + multipleChoiceAnswers.toString());
+        System.out.println("choseMultipleChoiceAnswers.toString() = " + choseMultipleChoiceAnswers.toString());
+
+        if (multipleChoiceAnswers.getMultipleChoiceAnswer1().equals(choseMultipleChoiceAnswers.getMultipleChoiceAnswer1()) &&
+                multipleChoiceAnswers.getMultipleChoiceAnswer2().equals(choseMultipleChoiceAnswers.getMultipleChoiceAnswer2()) &&
+                multipleChoiceAnswers.getMultipleChoiceAnswer3().equals(choseMultipleChoiceAnswers.getMultipleChoiceAnswer3()) &&
+                multipleChoiceAnswers.getMultipleChoiceAnswer4().equals(choseMultipleChoiceAnswers.getMultipleChoiceAnswer4()) &&
+                multipleChoiceAnswers.getMultipleChoiceAnswer5().equals(choseMultipleChoiceAnswers.getMultipleChoiceAnswer5())) {
             return QuestionLogType.ANSWER_CORRECT;
         } else {
             return QuestionLogType.ANSWER_WRONG;
         }
     }
+
 }

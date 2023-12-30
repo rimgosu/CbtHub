@@ -6,7 +6,6 @@ import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.round.Round;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,8 +55,8 @@ public class Question {
     @OneToMany(mappedBy = "member")
     private List<QuestionComment> questionComments;
 
-    @OneToOne(mappedBy = "question", fetch = LAZY)
-    private QuestionLog questionLog;
+    @OneToMany(mappedBy = "question", fetch = LAZY)
+    private List<QuestionLog> questionLogs;
 
 
 
