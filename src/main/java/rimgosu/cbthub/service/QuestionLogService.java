@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rimgosu.cbthub.domain.logs.QuestionLog;
-import rimgosu.cbthub.domain.question.Question;
+import rimgosu.cbthub.domain.logs.QuestionLogType;
+import rimgosu.cbthub.domain.question.MultipleChoiceAnswers;
 import rimgosu.cbthub.repository.QuestionLogRepository;
-import rimgosu.cbthub.repository.QuestionRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +40,11 @@ public class QuestionLogService {
         return questionLogRepository.findByQuestion_Id(questionId);
     }
 
+    public QuestionLogType checkCorrect(MultipleChoiceAnswers multipleChoiceAnswers, MultipleChoiceAnswers choseMultipleChoiceAnswers) {
+        if (multipleChoiceAnswers.equals(choseMultipleChoiceAnswers)) {
+            return QuestionLogType.ANSWER_CORRECT;
+        } else {
+            return QuestionLogType.ANSWER_WRONG;
+        }
+    }
 }

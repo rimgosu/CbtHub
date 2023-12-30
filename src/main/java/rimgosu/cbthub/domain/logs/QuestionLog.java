@@ -7,9 +7,7 @@ import rimgosu.cbthub.domain.question.OX;
 import rimgosu.cbthub.domain.question.Question;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
@@ -48,5 +46,16 @@ public class QuestionLog {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "round_log_id")
     private RoundLog roundLog;
+
+    public QuestionLog(Member member, Question question, QuestionLogType questionLogType, MultipleChoiceAnswers choseMultipleChoiceAnswers,
+                                    OX choseOxAnswer, String choseSubjectiveAnswer){
+        this.member = member;
+        this.question = question;
+        this.questionLogType = questionLogType;
+        this.choseMultipleChoiceAnswers = choseMultipleChoiceAnswers;
+        this.choseOxAnswer = choseOxAnswer;
+        this.choseSubjectiveAnswer = choseSubjectiveAnswer;
+        this.solveDate = new Date();
+    }
 
 }

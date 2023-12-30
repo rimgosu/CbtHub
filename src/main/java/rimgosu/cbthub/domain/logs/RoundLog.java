@@ -15,7 +15,6 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class RoundLog {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -16,7 +16,6 @@ import static javax.persistence.FetchType.LAZY;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Round {
 
     @Id

@@ -2,8 +2,8 @@ package rimgosu.cbthub.controller.forms;
 
 import lombok.*;
 import rimgosu.cbthub.domain.logs.QuestionLogType;
-import rimgosu.cbthub.domain.question.MultipleChoiceAnswers;
 import rimgosu.cbthub.domain.question.OX;
+import rimgosu.cbthub.domain.question.QuestionType;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +15,7 @@ public class QuestionLogForm {
     private Long questionId;
 
     private QuestionLogType questionLogType;
+    private QuestionType questionType;
 
     private OX choseMultipleChoiceAnswer1;
     private OX choseMultipleChoiceAnswer2;
