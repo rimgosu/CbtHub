@@ -23,9 +23,12 @@ public class QuestionLog {
     @Column(name = "question_log_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    // @OneToOne(mappedBy = "delivery", fetch = LAZY)
+    //    private Order order;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "question_id")
@@ -45,10 +48,21 @@ public class QuestionLog {
     @JoinColumn(name = "round_log_id")
     private RoundLog roundLog;
 
+    //== 등록 ==//
     public QuestionLog(Member member, Question question, QuestionLogType questionLogType, MultipleChoiceAnswers choseMultipleChoiceAnswers,
                                     OX choseOxAnswer, String choseSubjectiveAnswer){
         this.member = member;
         this.question = question;
+        this.questionLogType = questionLogType;
+        this.choseMultipleChoiceAnswers = choseMultipleChoiceAnswers;
+        this.choseOxAnswer = choseOxAnswer;
+        this.choseSubjectiveAnswer = choseSubjectiveAnswer;
+        this.solveDate = new Date();
+    }
+
+    //== 수정 ==//
+    public void updateQuestionLog(QuestionLogType questionLogType, MultipleChoiceAnswers choseMultipleChoiceAnswers,
+                       OX choseOxAnswer, String choseSubjectiveAnswer){
         this.questionLogType = questionLogType;
         this.choseMultipleChoiceAnswers = choseMultipleChoiceAnswers;
         this.choseOxAnswer = choseOxAnswer;

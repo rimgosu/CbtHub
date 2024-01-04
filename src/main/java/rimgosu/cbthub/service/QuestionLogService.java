@@ -40,8 +40,8 @@ public class QuestionLogService {
         return questionLogRepository.findByQuestion_Id(questionId);
     }
 
-    public QuestionLog findTopByMemberIdOrderByIdDesc(Long memberId) {
-        return questionLogRepository.findTopByMemberIdOrderByIdDesc(memberId);
+    public QuestionLog findByMemberUsername(String username) {
+        return questionLogRepository.findByMemberUsername(username);
     }
 
     public QuestionLogType checkCorrect(MultipleChoiceAnswers multipleChoiceAnswers, MultipleChoiceAnswers choseMultipleChoiceAnswers) {

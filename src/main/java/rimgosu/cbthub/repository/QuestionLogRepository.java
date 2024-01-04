@@ -12,5 +12,7 @@ public interface QuestionLogRepository extends JpaRepository<QuestionLog, Long> 
     List<QuestionLog> findByQuestion_Id(Long questionId);
     QuestionLog findTopByMemberIdOrderByIdDesc(Long memberId);
 
+    QuestionLog findByMemberUsername(String memberId);
+
 
 }

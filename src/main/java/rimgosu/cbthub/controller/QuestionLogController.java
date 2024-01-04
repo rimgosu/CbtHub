@@ -9,14 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import rimgosu.cbthub.controller.forms.QuestionLogForm;
 import rimgosu.cbthub.domain.logs.QuestionLog;
 import rimgosu.cbthub.domain.logs.QuestionLogType;
+import rimgosu.cbthub.domain.logs.RoundLog;
 import rimgosu.cbthub.domain.question.MultipleChoiceAnswers;
 import rimgosu.cbthub.domain.question.Question;
 import rimgosu.cbthub.domain.question.QuestionType;
 import rimgosu.cbthub.domain.round.Round;
-import rimgosu.cbthub.service.MemberService;
-import rimgosu.cbthub.service.QuestionLogService;
-import rimgosu.cbthub.service.QuestionService;
-import rimgosu.cbthub.service.RoundService;
+import rimgosu.cbthub.service.*;
 
 import javax.validation.Valid;
 
@@ -25,10 +23,10 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class QuestionLogController {
 
-    private final RoundService roundService;
     private final QuestionService questionService;
     private final QuestionLogService questionLogService;
     private final MemberService memberService;
+    private final RoundLogService roundLogService;
 
     @PostMapping("/questionLog/submit")
     public String answerSubmit(@Valid QuestionLogForm form, Model model, Authentication authentication) {
@@ -50,19 +48,49 @@ public class QuestionLogController {
          * 객관식 문제 처리
          */
         if (form.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
-            // 정답 확인
+            /**
+             * 정답 확인
+             */
             QuestionLogType questionLogType = questionLogService.checkCorrect(findQuestion.getMultipleChoiceAnswers(), choseMultipleChoiceAnswers);
 
-            QuestionLog questionLog = new QuestionLog(
-                    memberService.findByUsername(authentication.getName()).get(0), findQuestion, questionLogType, choseMultipleChoiceAnswers,
-                    form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer()
-            );
+            /**
+             * QuestionLog가 없을 때 : QuestionLog 등록
+             * QuestionLog가 있을 때 : QuestionLog 수정
+             */
+            QuestionLog findQuestionLog = questionLogService.findByMemberUsername(authentication.getName());
 
-            questionLogService.register(questionLog);
+            if (findQuestionLog == null) {
+                QuestionLog questionLog = new QuestionLog(
+                        memberService.findByUsername(authentication.getName()).get(0), findQuestion, questionLogType, choseMultipleChoiceAnswers,
+                        form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer()
+                );
+                questionLogService.register(questionLog);
+                model.addAttribute("questionLog", questionLog);
+            } else {
+                findQuestionLog.updateQuestionLog(questionLogType, choseMultipleChoiceAnswers, form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer());
+                model.addAttribute("questionLog", findQuestionLog);
+                questionLogService.register(findQuestionLog);
+            }
+
+            /**
+             * RoundLog가 없을 때 : RoundLog 등록
+             * RoundLog가 있을 때 : RoundLog 수정
+             */
+            RoundLog findRoundLog = roundLogService.findByMemberUsername(authentication.getName());
+
+            if (findRoundLog == null) {
+                RoundLog roundLog = new RoundLog(
+                        memberService.findByUsername(authentication.getName()).get(0), findQuestion, questionLogType, choseMultipleChoiceAnswers,
+                        form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer()
+                );
+                questionLogService.register(questionLog);
+            } else {
+                findQuestionLog.updateQuestionLog(questionLogType, choseMultipleChoiceAnswers, form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer());
+            }
 
             model.addAttribute("round", round);
             model.addAttribute("question", findQuestion);
-            model.addAttribute("lastQuestionLog", questionLog);
+
 
             return "question/questionOneList";
         }

@@ -100,15 +100,12 @@ public class QuestionController {
         log.info("GetMapping {questionId}/question/");
         Question question = questionService.findOne(questionId);
         Round round = question.getRound();
-        String username = authentication.getName();
-        List<Member> byUsername = memberService.findByUsername(username);
 
-        QuestionLog lastQuestionLog = questionLogService.findTopByMemberIdOrderByIdDesc(byUsername.get(0).getId());
-        System.out.println("lastQuestionLog = " + lastQuestionLog);
+        QuestionLog questionLog = questionLogService.findByMemberUsername(authentication.getName());
 
         model.addAttribute("question", question);
         model.addAttribute("round", round);
-        model.addAttribute("lastQuestionLog", lastQuestionLog);
+        model.addAttribute("questionLog", questionLog);
         return "question/questionOneList";
     }
 

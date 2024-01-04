@@ -23,7 +23,13 @@ public class RoundLog {
     @Column(name = "round_log_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    // 회원별 회차 진척도
+    private int wrongNumber;
+    private int correctNumber;
+    private int wrongCorrectNumber;
+    private float roundProgressPercent;
+    
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -36,4 +42,11 @@ public class RoundLog {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_log_id")
     private CategoryLog categoryLog;
+
+    //== 등록 ==//
+    public RoundLog(int wrongNumber, int correctNumber, int wrongCorrectNumber, float roundProgressPercent,
+                    Member member, Round round, ) {
+
+    }
+
 }
