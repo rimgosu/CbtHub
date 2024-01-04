@@ -14,7 +14,6 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionLog {

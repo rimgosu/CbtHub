@@ -103,7 +103,8 @@ public class QuestionController {
         String username = authentication.getName();
         List<Member> byUsername = memberService.findByUsername(username);
 
-        QuestionLog lastQuestionLog = questionLogService.findTopByMemberIdOrderByIdDesc(byUsername.getFirst().getId());
+        QuestionLog lastQuestionLog = questionLogService.findTopByMemberIdOrderByIdDesc(byUsername.get(0).getId());
+        System.out.println("lastQuestionLog = " + lastQuestionLog);
 
         model.addAttribute("question", question);
         model.addAttribute("round", round);

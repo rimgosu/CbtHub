@@ -46,12 +46,15 @@ public class QuestionLogController {
             form.getChoseMultipleChoiceAnswer1(),form.getChoseMultipleChoiceAnswer2(),form.getChoseMultipleChoiceAnswer3(),form.getChoseMultipleChoiceAnswer4(),form.getChoseMultipleChoiceAnswer5()
         );
 
+        /**
+         * 객관식 문제 처리
+         */
         if (form.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
             // 정답 확인
             QuestionLogType questionLogType = questionLogService.checkCorrect(findQuestion.getMultipleChoiceAnswers(), choseMultipleChoiceAnswers);
 
             QuestionLog questionLog = new QuestionLog(
-                    memberService.findByUsername(authentication.getName()).getFirst(), findQuestion, questionLogType, choseMultipleChoiceAnswers,
+                    memberService.findByUsername(authentication.getName()).get(0), findQuestion, questionLogType, choseMultipleChoiceAnswers,
                     form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer()
             );
 
