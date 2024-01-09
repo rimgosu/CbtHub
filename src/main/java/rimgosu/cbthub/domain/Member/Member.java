@@ -42,9 +42,9 @@ public class Member {
     private Date registerDate;
     private int point;
 
-    @OneToOne(mappedBy = "member", fetch = LAZY) private QuestionLog questionLogs;
-    @OneToOne(mappedBy = "member", fetch = LAZY) private RoundLog roundLogs;
-    @OneToOne(mappedBy = "member", fetch = LAZY) private CategoryLog categoryLogs;
+    @OneToMany(mappedBy = "member") private List<QuestionLog> questionLogs;
+    @OneToMany(mappedBy = "member") private List<RoundLog> roundLogs;
+    @OneToMany(mappedBy = "member") private List<CategoryLog> categoryLogs;
     @OneToMany(mappedBy = "member") private List<QuestionComment> questionComments;
     @OneToMany(mappedBy = "member") private List<BoardComment> boardComments;
     @OneToMany(mappedBy = "member") private List<BoardPost> boardPosts;

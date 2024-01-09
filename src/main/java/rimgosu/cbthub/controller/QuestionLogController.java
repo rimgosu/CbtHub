@@ -61,7 +61,7 @@ public class QuestionLogController {
 
             if (findQuestionLog == null) {
                 QuestionLog questionLog = new QuestionLog(
-                        memberService.findByUsername(authentication.getName()).get(0), findQuestion, questionLogType, choseMultipleChoiceAnswers,
+                        memberService.findByUsername(authentication.getName()).get(0),  ,findQuestion, questionLogType, choseMultipleChoiceAnswers,
                         form.getChoseOxAnswer(), form.getChoseSubjectiveAnswer()
                 );
                 questionLogService.register(questionLog);

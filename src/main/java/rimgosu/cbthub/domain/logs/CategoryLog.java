@@ -22,10 +22,10 @@ public class CategoryLog {
     @Column(name = "category_log_id")
     private Long id;
 
-    // 회원별 카테고리 진행도
+    // 회원별 카테고리 진행도(roundLogs로 계산)
     private float categoryProgressPercent;
 
-    @OneToOne(fetch = LAZY, cascade = ALL)
+    @ManyToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 
